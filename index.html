@@ -121,6 +121,28 @@ footer{text-align:center;padding:30px;color:#737b8d}
     </button>
     <div id="preview"></div>
   </section>
+  <section class="panel">
+  <h2>🎬 Story Generator</h2>
+
+  <label>Story Title</label>
+  <input id="storyTitle" placeholder="Enter story title">
+
+  <label>Your Story</label>
+  <textarea id="storyInput" placeholder="Describe your complete story..."></textarea>
+
+  <label>Number of Scenes</label>
+  <select id="sceneCount">
+    <option value="3">3 Scenes</option>
+    <option value="5">5 Scenes</option>
+    <option value="8">8 Scenes</option>
+  </select>
+
+  <button class="generate" onclick="buildStory()">
+    Create Storyboard
+  </button>
+
+  <div id="storyOutput"></div>
+  </section>
 </main>
 
 <footer>
