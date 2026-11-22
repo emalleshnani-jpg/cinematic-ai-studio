@@ -182,42 +182,7 @@ function previewImage(){
   img.style.borderRadius="12px";
   preview.appendChild(img);
 }
-  function buildStory(){
-  const title=document.getElementById("storyTitle").value.trim();
-  const story=document.getElementById("storyInput").value.trim();
-  const count=Number(document.getElementById("sceneCount").value);
-  const output=document.getElementById("storyOutput");
-
-  if(!story){
-    output.textContent="Please enter your story first.";
-    return;
-  }
-
-  const scenes=[
-    "Opening: Establish the location and atmosphere.",
-    "Introduction: Introduce the main character.",
-    "Conflict: Show the problem or enemy.",
-    "Action: Show the main action sequence.",
-    "Climax: Create the most powerful moment.",
-    "Aftermath: Show the result of the action.",
-    "Resolution: Resolve the conflict.",
-    "Ending: Finish with a cinematic closing shot."
-  ];
-
-  let html="<h3>🎬 "+(title || "My Story")+"</h3>";
-
-  for(let i=0;i<count;i++){
-    const index=Math.round(i*7/(count-1));
-    html+="<div class='scene-card'>";
-    html+="<h3>Scene "+(i+1)+"</h3>";
-    html+="<p>"+scenes[index]+"</p>";
-    html+="<p><b>Story:</b> "+story.replace(/</g,"&lt;")+"</p>";
-    html+="<p>Keep character appearance and costumes consistent.</p>";
-    html+="</div>";
-  }
-
-  output.innerHTML=html;
-}
+  
 </script>
 
 </body>
