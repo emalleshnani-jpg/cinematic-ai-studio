@@ -183,6 +183,74 @@ function previewImage(){
   preview.appendChild(img);
 }
   
+function buildStory(){
+  const title = document.getElementById("storyTitle").value.trim() || "My Story";
+  const story = document.getElementById("storyInput").value.trim();
+  const count = Number(document.getElementById("sceneCount").value);
+  const output = document.getElementById("storyOutput");
+
+  if(!story){
+    output.textContent = "Please enter your story first.";
+    return;
+  }
+
+  const scenes = [
+    "Opening: Establish the location, atmosphere and environment.",
+    "Introduction: Show the main character and their appearance.",
+    "Conflict: Introduce the enemy, danger or main problem.",
+    "Action: Show the character taking action in a dramatic sequence.",
+    "Climax: Create the most powerful cinematic moment.",
+    "Aftermath: Show the result of the main action.",
+    "Resolution: Show how the conflict is resolved.",
+    "Ending: Finish with an emotional cinematic closing shot."
+  ];
+
+  function escapeHTML(value){
+    return value.replace(/[&<>"']/g, char => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;",
+      '"':"&quot;", "'":"&#39;"
+    })[char]);
+  }
+
+  let html = `<h3>🎬 ${escapeHTML(title)}</h3>`;
+
+  for(let i=0; i<count; i++){
+    const beat = scenes[Math.round(i * 7 / Math.max(1,count-1))];
+
+    const prompt = `Cinematic scene ${i+1}. ${beat}
+Story context: ${story}
+Maintain exactly the same character face, hairstyle, costume, body proportions and accessories in every scene.
+Ultra realistic visuals, natural movement, detailed environment, cinematic lighting, realistic camera movement, 4K film quality.`;
+
+    html += `
+      <div class="panel">
+        <h3>🎬 Scene ${i+1}</h3>
+        <p>${escapeHTML(beat)}</p>
+        <p><b>AI Video Prompt:</b></p>
+        <p>${escapeHTML(prompt)}</p>
+        <button class="upload" onclick="copyScene(${i})">
+          📋 Copy Scene ${i+1} Prompt
+        </button>
+      </div>`;
+  }
+
+  output.innerHTML = html;
+  window.storyPrompts = Array.from(
+    {length: count},
+    (_,i) => {
+      const beat = scenes[Math.round(i * 7 / Math.max(1,count-1))];
+      return `Cinematic scene ${i+1}. ${beat}\nStory context: ${story}\nMaintain exactly the same character face, hairstyle, costume, body proportions and accessories in every scene.\nUltra realistic visuals, natural movement, detailed environment, cinematic lighting, realistic camera movement, 4K film quality.`;
+    }
+  );
+}
+
+function copyScene(index){
+  const prompt = window.storyPrompts[index];
+  navigator.clipboard.writeText(prompt)
+    .then(() => alert("Scene prompt copied!"))
+    .catch(() => alert("Copy not supported. Please try again."));
+}
+
 </script>
 
 </body>
